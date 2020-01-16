@@ -1,0 +1,5 @@
+site,group_name,name,facility_id,tenant,status,role,type,serial,asset_tag,width,u_height,desc_units,outer_width,outer_depth,outer_unit,comments
+Strickland East,,R1,,,Active,,,,,19,42,,,,,
+Strickland West,,R2,,,Active,,,,,19,42,,,,,
+Strickland North,,R3,,,Active,,,,,19,42,,,,,
+Strickland South,,R4,,,Active,,,,,19,42,,,,,

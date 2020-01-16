@@ -1,0 +1,5 @@
+name,device_role,tenant,manufacturer,model_name,platform,serial,asset_tag,status,site,rack_group,rack_name,position,face,comments
+Core Router 1,Core Switch,,Cisco,Catalyst 3850,,,,Active,Strickland East,,R1,42,Front,
+Core Router 2,Core Switch,,Cisco,Catalyst 3850,,,,Active,Strickland North,,R3,42,Front,
+Core Router 3,Core Switch,,Cisco,Catalyst 3850,,,,Active,Strickland South,,R4,42,Front,
+Core Router 4,Core Switch,,Cisco,Catalyst 3850,,,,Active,Strickland West,,R2,42,Front,

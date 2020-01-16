@@ -1,0 +1,94 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  collections:
+    - fragmentedpacket.netbox_modules
+  vars:
+    netbox_url: http://localhost:8000
+    netbox_token: c2832328bb7c5b7ce8fc17139382adadc676a257
+    devices:
+
+      - name: "device100"
+        position: 20
+        device_type: "EX4300-48T"
+        device_role: "access-switch"
+
+      - name: "device101"
+        position: 21
+        device_type: "EX4300-48T"
+        device_role: "access-switch"
+
+      - name: "device102"
+        position: 22
+        device_type: "EX4300-48T"
+        device_role: "access-switch"
+
+      - name: "device103"
+        position: 23
+        device_type: "EX4300-48T"
+        device_role: "access-switch"
+
+  tasks:
+    - name: "Create new site"
+      netbox_site:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "Site - NTC"
+        state: present
+      register: "ntc_site"
+
+    - name: "Create new rack"
+      netbox_rack:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "NTC - Rack-One"
+          site: "{{ ntc_site.site.slug }}"
+      register: "ntc_rack_one"
+
+    - name: "Create devices"
+      netbox_device:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "{{ item.name }}"
+          device_role: "{{ item.device_role }}"
+          device_type: "{{ item.device_type }}"
+          site: "{{ ntc_site.site.slug }}"
+          rack: "{{ ntc_rack_one.rack.name }}"
+          position: "{{ item.position }}"
+          face: front
+      loop: "{{ devices }}"
+
+    - name: "Create lo0 intefaces"
+      netbox_device_interface:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "lo0.0"
+          device: "{{ item.name }}"
+          form_factor: Virtual
+      loop: "{{ devices }}"
+
+    - name: "Add IP to loopback0"
+      netbox_ip_address:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          prefix: "172.16.0.0/24"
+          interface:
+            device: "{{ item.name }}"
+            name: "lo0.0"
+      loop: "{{ devices }}"
+      register: loopback_addresses
+
+    - name: "Set device primary IP"
+      netbox_device:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "{{ item.item.name }}"
+          primary_ip4: "{{ item.ip_address.address }}"
+      loop: "{{ loopback_addresses.results }}"

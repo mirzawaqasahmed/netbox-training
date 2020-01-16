@@ -1,0 +1,14 @@
+# netbox_inventory.yml file in YAML format
+# Example command line: ansible-inventory -v --list -i netbox_inventory.yml
+
+plugin: netbox
+api_endpoint: http://localhost:8000
+validate_certs: False
+config_context: True
+token: c2832328bb7c5b7ce8fc17139382adadc676a257
+group_by:
+  - device_roles
+query_filters:
+  - tag: ansible
+compose:
+  ansible_network_os: platform.slug

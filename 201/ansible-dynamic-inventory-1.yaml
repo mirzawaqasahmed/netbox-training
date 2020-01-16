@@ -1,0 +1,13 @@
+---
+- hosts: all
+  connection: network_cli
+  become: no
+  gather_facts: no
+
+  tasks:
+    - name: set ntp servers
+      ios_config:
+        lines:
+          - "ntp server {{ config_context[0].ntp_server_1 }} version 2 prefer"
+          - "ntp server {{ config_context[0].ntp_server_2 }} version 2"
+          - "ntp server {{ config_context[0].ntp_server_3 }} version 2"

@@ -1,0 +1,13 @@
+---
+- hosts: "device_roles_virtual"
+  connection: network_cli
+  become: no
+  gather_facts: no
+
+  tasks:
+    - name: run show version
+      ios_command:
+        commands: show version
+      register: version
+
+    - debug: msg={{version}}

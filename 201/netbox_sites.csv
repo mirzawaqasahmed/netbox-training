@@ -1,0 +1,5 @@
+name,slug,status,region,tenant,facility,asn,time_zone,description,physical_address,shipping_address,latitude,longitude,contact_name,contact_phone,contact_email,comments
+Strickland East,strickland-east,Active,Texas,Strickland Propane,,,,,"2391 Daletech Dr, Arlen TX",,,,,,,
+Strickland North,strickland-north,Active,Texas,Strickland Propane,,,,,"428 Ladybird Ln, Arlen TX",,,,,,,
+Strickland South,strickland-south,Active,Texas,Strickland Propane,,,,,"800 Pocket Sand Dr, McManerbury TX",,,,,,,
+Strickland West,strickland-west,Active,Texas,Strickland Propane,,,,,"391 Mangione Way Ste 204, McManerbury TX",,,,,,,
